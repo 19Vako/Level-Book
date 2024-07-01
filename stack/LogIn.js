@@ -4,8 +4,6 @@ import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { gStyle } from '../styles/styles'
 
-
-
 export default function UserAcount({navigation}) {
 
   const loadScene = () => {
@@ -31,12 +29,13 @@ export default function UserAcount({navigation}) {
       Password:UserPassword
     }
       
-    axios.post("http://192.168.1.3:5001/LogIn", Data)
+    axios.post("http://192.168.1.2:5001/LogIn", Data)
     .then(res => {
       console.log(res.data)
-      /* if(res.data.success){
+       if(res.data){
         Acount()
-      } */
+       }
+       
     })
     .catch(err => console.log(err))
   }

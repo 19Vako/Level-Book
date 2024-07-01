@@ -2,9 +2,8 @@ import { StyleSheet, Text, ScrollView, TouchableOpacity, Image, View } from 'rea
 import React from 'react'
 
 export default function A1List() {
-  return (
-    <TouchableOpacity style={styles.container}>
-      
+  return 
+    /* <TouchableOpacity style={styles.container}>
         <Text style={styles.title}>A1 Level</Text>
         <ScrollView horizontal={true} contentContainerStyle={styles.scrollViewContent}>
           <TouchableOpacity style={styles.content}>
@@ -20,9 +19,8 @@ export default function A1List() {
             <Image style={styles.img} source={require('../assets/Escape-Phillip_Burrows.jpg')} />
           </TouchableOpacity>
         </ScrollView>
-      
-    </TouchableOpacity>
-  )
+    </TouchableOpacity> */
+  
 }
 
 const styles = StyleSheet.create({

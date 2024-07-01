@@ -5,18 +5,15 @@ import { gStyle } from '../styles/styles';
 import { AntDesign } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 
 export default function UserAcount() {
-  
-
 
   return (
     <ScrollView style={gStyle.container}>
       <View style={styles.userBox}>
         <TouchableOpacity>
          
-            <Ionicons name="person-circle" size={150} style={styles.image} color="white" />
+          <Ionicons name="person-circle" size={150} style={styles.image} color="white" />
           
         </TouchableOpacity>
         <Text style={styles.title}>User</Text>

@@ -5,17 +5,29 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function Header({ navigation }) {
 
-  const loadScene = () => {
+  const loadLogIn = () => {
     navigation.navigate('LogIn')
   }
+  
+  const loadUser = () => {
+    navigation.navigate('UserAcount')
+  }
 
+  const [UserAcount, setUser] = useState(false)
+  const UserCheck = () => {
+    if(UserAcount){
+     loadUser()
+    }
+    else loadLogIn()
+  }
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Level Book</Text>
-      <Ionicons name="person-circle" size={50} color="white" onPress={loadScene} />
+      <Ionicons name="person-circle" size={50} color="white" onPress={UserCheck} />
     </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

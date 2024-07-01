@@ -2,6 +2,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const User = require("./serverUser");
+const Books = require("./serverUser")
 const cors = require("cors");
 require("./serverUser")
 
@@ -44,18 +45,27 @@ app.post("/register", async (req, res) =>{
 })
 
 app.post("/LogIn", async (req, res) =>{
-    const {name, password} = req.body
+    const {name} = req.body
     
     try{
         const user = await User.findOne({name: name});
 
         if(!user){
-            return res.send({ status: "error", data: "User not found"    });
+            return res.send({ status: "error", data: "User not found"});
         }
 
-        res.send({ status: "ok", data: "User is authenticated"});
+        res.send({ status: "ok", data: true});
     }catch (error) {
-        res.status(500).send({ status: "error", data: "Server error"     });
+        res.status(500).send({ status: "error", data: "Server error"});
     }
 })
 
+app.get("/GetA1", async (req, res) =>{
+    try{
+        const Book = await Books.find({});
+        res.json(Book)
+    }
+    catch (err){
+        res.status(500).send(err)
+    }
+})

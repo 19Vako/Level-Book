@@ -1,8 +1,9 @@
 import React from 'react';
+import { Button, TouchableOpacity, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { FontAwesome5 } from '@expo/vector-icons';
 
 //Component
 import Header from './components/Header';
@@ -77,17 +78,26 @@ export default function Navigate() {
             },
           }}
         />
-        <Stack.Screen 
-          name="UserAcount"
-          component={UserAcount}
-          options={{
-            title: 'Acount',
-            headerTintColor: 'white',
-            headerStyle: {
-              backgroundColor: '#1d1e1f',
-            },
-          }}
-        />
+        <Stack.Screen
+  name="UserAcount"
+  component={UserAcount}
+  options={({ navigation }) => ({
+    title: 'Acount',
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: '#1d1e1f',
+    },
+    headerLeft: () => (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('MainScreen')}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
+      >
+        <FontAwesome5 name="chevron-left" size={27} color="white" style={{marginLeft: 5}} />
+        <Text style={{ color: 'white', marginLeft: 5, fontSize: 18 }}>Home</Text>
+      </TouchableOpacity>
+    ),
+  })}
+/>
 
       </Stack.Navigator>
     </NavigationContainer>
