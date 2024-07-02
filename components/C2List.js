@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  View
 } from 'react-native';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,7 +15,7 @@ const Book = () => {
 
   useEffect(() => {
     const getBooks = () => {
-      axios.get("http://192.168.1.3:5001/GetA1")
+      axios.get("http://192.168.1.3:5001/GetC2")
         .then(res => {
           const data = res.data.map((book, index) => ({
             id: index,
@@ -42,7 +43,7 @@ export default function A1List() {
   return (
     <TouchableOpacity>
     <LinearGradient colors={['#1c1c1c', '#0c0d0c']} style={styles.container}>
-      <Text style={styles.title}>A1 Level</Text>
+      <Text style={styles.title}>C2 Level</Text>
       <ScrollView horizontal={true} contentContainerStyle={styles.scrollViewContent}>
         <Book />
       </ScrollView>

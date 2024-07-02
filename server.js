@@ -2,7 +2,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const User = require("./serverUser");
-const Books = require("./serverUser")
+const { BooksA1, BooksA2, BooksB1, BooksB2, BooksC1, BooksC2 } = require("./serverUser");
 const cors = require("cors");
 require("./serverUser")
 
@@ -62,10 +62,62 @@ app.post("/LogIn", async (req, res) =>{
 
 app.get("/GetA1", async (req, res) =>{
     try{
-        const Book = await Books.find({});
+        const Book = await BooksA1.find({});
         res.json(Book)
     }
     catch (err){
         res.status(500).send(err)
     }
 })
+
+app.get("/GetA2", async (req, res) => {
+    try{
+        const Book = await BooksA2.find({});
+        res.json(Book)
+    }
+    catch (err){
+        res.status(500).send(err)
+    }
+})
+
+app.get("/GetB1", async (req, res) => {
+    try{
+        const Book = await BooksB1.find({});
+        res.json(Book)
+    }
+    catch (err){
+        res.status(500).send(err)
+    }
+})
+
+app.get("/GetB2", async (req, res) => {
+    try{
+        const Book = await BooksB2.find({});
+        res.json(Book)
+    }
+    catch (err){
+        res.status(500).send(err)
+    }
+})
+
+app.get("/GetC1", async (req, res) => {
+    try{
+        const Book = await BooksC1.find({});
+        res.json(Book)
+    }
+    catch (err){
+        res.status(500).send(err)
+    }
+})
+
+app.get("/GetC2", async (req, res) => {
+    try{
+        const Book = await BooksC2.find({});
+        res.json(Book)
+    }
+    catch (err){
+        res.status(500).send(err)
+    }
+})
+
+

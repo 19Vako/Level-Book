@@ -4,26 +4,28 @@ import { gStyle } from '../styles/styles';
 import axios from 'axios';
 
 export default function TopForBeginers() {
+
+
   const Book = () => {
     const [Books, setBooks] = useState([]);
     const maxLength = 250;
 
     useEffect(() => {
       const getBooks = () => {
-        axios.get("http://192.168.1.2:5001/GetA1")
+        axios.get("http://192.168.1.3:5001/GetA1")
           .then(res => {
             const booksData = res.data.slice(0, 5).map((book, index) => {
               let text = book.text;
               if (text.length > maxLength) {
                 text = text.substring(0, maxLength) + '...';
               }
-              return {
+                return {
                 id: index,
                 author: book.author,
                 photo: book.photo,
                 text: text,
                 nameBook: book.namebook
-              }
+              } 
             });
             setBooks(booksData);
           })

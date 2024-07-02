@@ -1,49 +1,89 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image} from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
+
+const Book = () => {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const getBooks = () => {
+      axios.get("http://192.168.1.3:5001/GetA2")
+        .then(res => {
+          const data = res.data.map((book, index) => ({
+            id: index,
+            photo: book.photo,
+          }));
+          setBooks(data);
+        })
+        .catch(err => console.log(err));
+    };
+    getBooks();
+  }, []);
+
+  return (
+    <>
+      {books.map(book => (
+        <TouchableOpacity key={book.id} style={styles.content}>
+          <Image style={styles.img} source={{ uri: book.photo }} />
+        </TouchableOpacity>
+      ))}
+    </>
+  );
+};
 
 export default function A2List() {
   return (
-  <TouchableOpacity style={styles.container}>
+    <TouchableOpacity>
+    <LinearGradient colors={['#1c1c1c', '#0c0d0c']} style={styles.container}>
       <Text style={styles.title}>A2 Level</Text>
-    <ScrollView horizontal={true}> 
-      <TouchableOpacity style={styles.content}>
-        <Image style={styles.img} source={require('../assets/UFOs-Helen_Brooke.jpg')} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.content}>
-        <Image style={styles.img} source={require('../assets/Dragonheart-Patrick_Read_Johnson.jpg')} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.content}>
-        <Image style={styles.img} source={require('../assets/Adventure_at_Haydon_Point-Elizabeth_Ferretti.jpg')} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.content}>
-        <Image style={styles.img} source={require('../assets/Extreme_Sports-Michael_Dean.jpg')} />
-      </TouchableOpacity>
-    </ScrollView>
-  </TouchableOpacity>
-  )
+      <ScrollView horizontal={true} contentContainerStyle={styles.scrollViewContent}>
+        <Book />
+      </ScrollView>
+    </LinearGradient>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
-  
-  container:{
-    backgroundColor: '#3d3c3c',
-    marginTop: 50
+  container: {
+    marginTop: 20
   },
-  content:{
+  scrollViewContent: {
+    flexDirection: 'row',
+  },
+  content: {
     marginHorizontal: 5,
-    marginBottom: 30
+    marginBottom: 30,
   },
   title: {
-    fontSize: 40,
+    fontSize: 30,
     fontFamily: 'ari-bold',
-    margin: 30,
-    color: 'white'
+    margin: 20,
+    color: 'white',
   },
-  
-  img:{
+  img: {
     width: 150,
     height: 250,
-    borderRadius: 10
-  }
-
-})
+    borderRadius: 10,
+  },
+  gradientContainer: {
+    marginTop: 20,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  innerGradient: {
+    padding: 15,
+    borderRadius: 10,
+  },
+  gradientText: {
+    fontSize: 20,
+    color: 'white',
+  },
+});

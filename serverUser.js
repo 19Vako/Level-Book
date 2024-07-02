@@ -10,11 +10,12 @@ const UserSchema = new mongoose.Schema({
         required: true,
     }
 });
-
 const User = mongoose.model("User", UserSchema, "users");
 module.exports = User;
 
-const A1Schema = new mongoose.Schema({
+
+
+const BookSchema = new mongoose.Schema({
     namebook: {
         type: String,
         required: true
@@ -41,5 +42,12 @@ const A1Schema = new mongoose.Schema({
     }
 })
 
-const Books = mongoose.model("Books", A1Schema, "A1_Level")
-module.exports = Books;
+const BooksA1 = mongoose.model("BooksA1", BookSchema, "A1_Level");
+const BooksA2 = mongoose.model("BooksA2", BookSchema, "A2_Level");
+const BooksB1 = mongoose.model("BooksB1", BookSchema, "B1_Level");
+const BooksB2 = mongoose.model("BooksB2", BookSchema, "B2_Level");
+const BooksC1 = mongoose.model("BooksC1", BookSchema, "C1_Level");
+const BooksC2 = mongoose.model("BooksC2", BookSchema, "C2_Level");
+module.exports = { BooksA1, BooksA2, BooksB1, BooksB2, BooksC1, BooksC2 };
+
+

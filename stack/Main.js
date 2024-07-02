@@ -6,6 +6,10 @@ import LevelList from '../components/LevelList';
 import ForBegginers from '../components/ForBegginers';
 import A1List from '../components/A1List';
 import A2List from '../components/A2List';
+import B1List from '../components/B1List';
+import B2List from '../components/B2List';
+import C1List from '../components/C1List';
+import C2List from '../components/C2List';
 import { gStyle } from '../styles/styles';
 
 
@@ -18,12 +22,17 @@ export default function Main({ navigation }) {
   return (
     <ScrollView style={gStyle.container}>
       <Header navigation={navigation}/>
-      <LevelList />
+       <LevelList />
+      
+      <A1List />
+      <A2List />
       <TouchableOpacity onPress={loadScene}>
         <ForBegginers />
       </TouchableOpacity>
-      <A1List />
-      <A2List />
+      <B1List />
+      <B2List />
+      <C1List />
+      <C2List />
       <StatusBar style="auto" />
       </ScrollView>
   );
