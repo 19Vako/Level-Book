@@ -22,17 +22,16 @@ export default function Main({ navigation }) {
   return (
     <ScrollView style={gStyle.container}>
       <Header navigation={navigation}/>
-       <LevelList />
-      
-      <A1List />
-      <A2List />
+      <LevelList navigation={navigation}/>
+      <A1List navigation={navigation}/>
+      <A2List navigation={navigation}/>
       <TouchableOpacity onPress={loadScene}>
         <ForBegginers />
       </TouchableOpacity>
-      <B1List />
-      <B2List />
-      <C1List />
-      <C2List />
+      <B1List navigation={navigation}/>
+      <B2List navigation={navigation}/>
+      <C1List navigation={navigation}/>
+      <C2List navigation={navigation}/>
       <StatusBar style="auto" />
       </ScrollView>
   );

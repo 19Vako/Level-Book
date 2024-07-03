@@ -4,7 +4,7 @@ import { gStyle } from '../styles/styles'
 export default function Library() {
   return (
     <ScrollView style={gStyle.container}>
-      <Text>TopBooks</Text>
+      
     </ScrollView>
   )
 }

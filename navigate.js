@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -21,7 +21,8 @@ import Search from './stack/Search';
 import SignUp from './stack/SignUp';
 import LogIn from './stack/LogIn';
 import UserAcount from './stack/UserAcount';
-
+import Book from './stack/Book';
+import ReadBook from './stack/ReadBook';
 
 
 
@@ -38,6 +39,7 @@ export default function Navigate() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
         <Stack.Screen 
           name="MainScreen" 
           component={BottomTabs} 
@@ -50,7 +52,6 @@ export default function Navigate() {
           name="SignUp"
           component={SignUp}
           options={{
-            
             title: 'Sign up',
             headerTintColor: 'white',
             headerStyle: {
@@ -81,26 +82,48 @@ export default function Navigate() {
           }}
         />
         <Stack.Screen
-  name="UserAcount"
-  component={UserAcount}
-  options={({ navigation }) => ({
-    title: 'Acount',
-    headerTintColor: 'white',
-    headerStyle: {
-      backgroundColor: '#1d1e1f',
-    },
-    headerLeft: () => (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('MainScreen')}
-        style={{ flexDirection: 'row', alignItems: 'center' }}
-      >
-        <FontAwesome5 name="chevron-left" size={27} color="white" style={{marginLeft: 5}} />
-        <Text style={{ color: 'white', marginLeft: 5, fontSize: 18 }}>Home</Text>
-      </TouchableOpacity>
-    ),
-  })}
-/>
+          name="UserAcount"
+          component={UserAcount}
+          options={({ navigation }) => ({
+            title: 'Acount',
+            headerTintColor: 'white',
+            headerStyle: {
+              backgroundColor: '#1d1e1f',
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('MainScreen')}
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+                >
+                <FontAwesome5 name="chevron-left" size={27} color="white" style={{marginLeft: 5}} />
+                <Text style={{ color: 'white', marginLeft: 5, fontSize: 18 }}>Home</Text>
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name='Book'
+          component={Book}
+          options={{
+            title: '',
+            headerTintColor: 'white',
+            headerStyle: {
+              backgroundColor: '#1d1e1f'
+            },
+          }}
+        />
+        <Stack.Screen
+          name='ReadBook'
+          component={ReadBook}
+          options={{
+            title: '',
+            headerTintColor: 'white',
+            headerStyle: {
+              backgroundColor: '#1d1e1f'
+            },
+          }}
 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
