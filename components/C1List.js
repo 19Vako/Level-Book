@@ -10,7 +10,7 @@ import {
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const Book = () => {
+const Book = ({navigation}) => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -20,6 +20,11 @@ const Book = () => {
           const data = res.data.map((book, index) => ({
             id: index,
             photo: book.photo,
+            namebook: book.namebook,
+            author: book.author,
+            text: book.text,
+            link: book.link,
+            Booklink: book.Booklink
           }));
           setBooks(data);
         })
@@ -31,7 +36,7 @@ const Book = () => {
   return (
     <>
       {books.map(book => (
-        <TouchableOpacity key={book.id} style={styles.content}>
+        <TouchableOpacity key={book.id} style={styles.content} onPress={() => navigation.navigate('Book', {book})}>
           <Image style={styles.img} source={{ uri: book.photo }} />
         </TouchableOpacity>
       ))}
@@ -39,13 +44,13 @@ const Book = () => {
   );
 };
 
-export default function A1List() {
+export default function A1List({navigation}) {
   return (
     <TouchableOpacity>
     <LinearGradient colors={['#1c1c1c', '#0c0d0c']} style={styles.container}>
       <Text style={styles.title}>C1 Level</Text>
       <ScrollView horizontal={true} contentContainerStyle={styles.scrollViewContent}>
-        <Book />
+        <Book navigation={navigation}/>
       </ScrollView>
     </LinearGradient>
     </TouchableOpacity>

@@ -15,7 +15,6 @@ export default function ReadBook({route}) {
         })
         .catch(error => console.error('Error fetching data:', error));
     }, []);
-  
   return (
     <ScrollView style={gStyle.container}>
       <View style={styles.container}>

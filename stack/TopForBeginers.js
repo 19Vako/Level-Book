@@ -3,10 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { gStyle } from '../styles/styles';
 import axios from 'axios';
 
-export default function TopForBeginers() {
+export default function TopForBeginers({navigation}) {
 
-
-  const Book = () => {
+  const Book = ({navigation}) => {
     const [Books, setBooks] = useState([]);
     const maxLength = 250;
 
@@ -21,10 +20,12 @@ export default function TopForBeginers() {
               }
                 return {
                 id: index,
-                author: book.author,
                 photo: book.photo,
-                text: text,
-                nameBook: book.namebook
+                namebook: book.namebook,
+                author: book.author,
+                text: book.text,
+                link: book.link,
+                Booklink: book.Booklink
               } 
             });
             setBooks(booksData);
@@ -37,7 +38,7 @@ export default function TopForBeginers() {
     return (
       <>
         {Books.map(book => (
-          <TouchableOpacity key={book.id} style={styles.BookContainer}>
+          <TouchableOpacity key={book.id} style={styles.BookContainer} onPress={() => navigation.navigate('Book', {book})}>
             <View style={styles.box}>
               {book.photo ? <Image style={styles.photo} source={{ uri: book.photo }} /> : null}
               <Text style={styles.BookName}>{book.nameBook}</Text>
@@ -54,7 +55,7 @@ export default function TopForBeginers() {
 
   return (
     <ScrollView style={gStyle.container}>
-      <Book />
+      <Book navigation={navigation} />
     </ScrollView>
   );
 }
