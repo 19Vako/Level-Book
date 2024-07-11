@@ -1,11 +1,30 @@
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { gStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import axios from 'axios';
+import UserContext from '../UserContext/Context';
+
 
 export default function Book({ route, navigation }) {
-  const  { book }  = route.params;
+  const  { book } = route.params;
+  const  { user, setUser } = useContext(UserContext);
+  
+  
+  function AddToLibrary() {
+    axios.post("http://192.168.1.3:5001/LibraryAdd", {userId: user._id, book: book} )
+    .then(res => {
+      const updatedUser = { ...user, library: [...user.library, book] };
+      setUser(updatedUser);
+      console.log(res.data)
+    })
+    .catch(err => {
+      console.error(err)
+    });
+  }
+  
+
   return (
     <ScrollView style={gStyle.container}>
       <View style={styles.imgContainer}>
@@ -18,12 +37,8 @@ export default function Book({ route, navigation }) {
           <TouchableOpacity style={styles.readNow} onPress={() => navigation.navigate('ReadBook', {book})}>
             <Text style={styles.readNowTitle}>READ NOW</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.audioContainer}>
-            <Text style={styles.addLibrary}>RUN AUDIO</Text>
-          </TouchableOpacity>
           
-          <TouchableOpacity style={styles.addContainer}>
+          <TouchableOpacity style={styles.addContainer} onPress={AddToLibrary}>
             <Ionicons name="add-circle" size={24} color="white" />
             <Text style={styles.addLibrary}>ADD TO LIBRARY</Text>
           </TouchableOpacity> 
@@ -62,7 +77,7 @@ const styles = StyleSheet.create({
   marginVertical: 15
  },
  elContainer:{
-  marginHorizontal: 45,
+  marginHorizontal: 30,
   borderBottomWidth: 1,
   borderColor: 'gray',
   paddingBottom: 25
@@ -113,7 +128,7 @@ const styles = StyleSheet.create({
  Description: {
   marginTop: 30,
   marginBottom: 50,
-  marginHorizontal: 45,
+  marginHorizontal: 30,
   borderBottomWidth: 1,
   borderColor: 'gray',
   paddingBottom: 25

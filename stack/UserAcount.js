@@ -1,22 +1,25 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { gStyle } from '../styles/styles';
 import { AntDesign } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import UserContext from '../UserContext/Context';
+import { useContext } from 'react';
 
-export default function UserAcount() {
+export default function UserAcount({ route }) {
+  
+  const { user } = useContext(UserContext)
 
   return (
     <ScrollView style={gStyle.container}>
       <View style={styles.userBox}>
+
         <TouchableOpacity>
-         
           <Ionicons name="person-circle" size={150} style={styles.image} color="white" />
-          
         </TouchableOpacity>
-        <Text style={styles.title}>User</Text>
+
+        <Text style={styles.title}>{user.name}</Text>
 
         <View style={styles.box}>
           <TouchableOpacity style={styles.list}>
@@ -43,6 +46,11 @@ export default function UserAcount() {
             </View>
           </TouchableOpacity>
         </View>
+
+        <TouchableOpacity style={styles.out}>
+          <Text style={styles.titleOut}>Exit</Text>
+        </TouchableOpacity>
+
       </View>
     </ScrollView>
   );
@@ -82,4 +90,17 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
   },
+  out: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '100%',
+    marginBottom: 10
+    
+  },
+  titleOut: {
+    color: 'red',
+    fontFamily: 'ari-med',
+    fontSize: 20,
+    marginHorizontal: 15,
+  }
 });

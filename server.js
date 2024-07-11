@@ -1,8 +1,7 @@
 //server.js
 const express = require("express")
 const mongoose = require("mongoose")
-const User = require("./serverUser");
-const { BooksA1, BooksA2, BooksB1, BooksB2, BooksC1, BooksC2 } = require("./serverUser");
+const { BooksA1, BooksA2, BooksB1, BooksB2, BooksC1, BooksC2, User } = require("./serverUser");
 const cors = require("cors");
 require("./serverUser")
 
@@ -36,7 +35,7 @@ app.post("/register", async (req, res) =>{
     try{
         await User.create({
             name:name,
-            password:password
+            password:password,
         })
         res.send({status:"ok", data:"User Created"})
     }
@@ -45,20 +44,47 @@ app.post("/register", async (req, res) =>{
 })
 
 app.post("/LogIn", async (req, res) =>{
-    const {name} = req.body
-    
+    const {name} = req.body;
+
     try{
         const user = await User.findOne({name: name});
-
+        
         if(!user){
             return res.send({ status: "error", data: "User not found"});
         }
 
-        res.send({ status: "ok", data: true});
+        res.json(user)
+       
     }catch (error) {
         res.status(500).send({ status: "error", data: "Server error"});
     }
 })
+
+app.post("/LibraryAdd", async(req, res) =>{
+    const { userId, book } = req.body
+    
+    try{
+        const existBook = await User.findOne({_id: userId, library: book})
+        
+        if(!existBook){
+            const library = await User.updateOne(
+            {_id: userId},
+            {$push: {library: book}}
+            );
+
+          if(library.modifiedCount === 0){
+            res.status(404).send({ status: "error",   data: "User not found" })
+          }else {
+            res.status(200).send({ status: "success", data: "Book added to library" });
+        }
+      }else{
+        res.status(200).send({status: "Exist", data: "Book exist in library"})
+      }
+    
+ 
+    }catch (err) {res.status(500).send({ status: "error", data: "Server error"});}
+})  
+ 
 
 app.get("/GetA1", async (req, res) =>{
     try{

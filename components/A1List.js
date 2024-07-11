@@ -5,11 +5,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 
+export default function A1List({ navigation }) {
 
-
-const Book = ({ navigation }) => {
   const [books, setBooks] = useState([]);
-
+  const nameLevel = 'A1 Level';
   useEffect(() => {
     const getBooks = () => {
       axios.get("http://192.168.1.3:5001/GetA1")
@@ -29,7 +28,8 @@ const Book = ({ navigation }) => {
     };
     getBooks();
   }, []);
-
+  
+const Book = ({ navigation }) => {
   return (
     <>
       {books.map(book => (
@@ -41,9 +41,8 @@ const Book = ({ navigation }) => {
   );
 };
 
-export default function A1List({ navigation }) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('Level', {books, nameLevel})}>
     <LinearGradient colors={['#1c1c1c', '#0c0d0c']} style={styles.container}>
       <Text style={styles.title}>A1 Level</Text>
       <ScrollView horizontal={true} contentContainerStyle={styles.scrollViewContent}>
@@ -56,7 +55,7 @@ export default function A1List({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50
+    marginTop: 35
   },
   scrollViewContent: {
     flexDirection: 'row',

@@ -1,29 +1,25 @@
 // Header.js
-import React, { useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, Modal, View } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, SafeAreaView} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import UserContext from '../UserContext/Context';
 
 export default function Header({ navigation }) {
+  const { user } = useContext(UserContext)
 
-  const loadLogIn = () => {
-    navigation.navigate('LogIn')
-  }
-  
-  const loadUser = () => {
-    navigation.navigate('UserAcount')
-  }
-
-  const [UserAcount, setUser] = useState(false)
-  const UserCheck = () => {
-    if(UserAcount){
-     loadUser()
+  const checkUser = () => {
+    if(!user){
+      navigation.navigate('LogIn')
+    
+    }else{
+      navigation.navigate('UserAcount')
     }
-    else loadLogIn()
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Level Book</Text>
-      <Ionicons name="person-circle" size={50} color="white" onPress={UserCheck} />
+      <Ionicons name="person-circle" size={50} color="white" onPress={checkUser} />
     </SafeAreaView>
   );
 }
@@ -35,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 10,
-    marginTop: 15
+    marginTop: 35
   },
   text: {
     color: 'white',

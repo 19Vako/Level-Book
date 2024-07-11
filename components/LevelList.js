@@ -2,6 +2,10 @@ import { StyleSheet, Text, TouchableOpacity, ScrollView, View } from 'react-nati
 import React from 'react';
 
 export default function List() {
+
+   
+
+
   return (
     <View style={styles.container}>
       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
