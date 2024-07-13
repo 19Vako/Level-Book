@@ -13,13 +13,12 @@ export default function Library({ navigation }) {
     }
   }, [user]);
   
-  
 
   return (
     <ScrollView style={gStyle.container}>
       {user ? (
         <View style={styles.box}>
-          
+
           {library.map((book, index) => (
             <TouchableOpacity
               style={styles.container}
@@ -36,7 +35,8 @@ export default function Library({ navigation }) {
         </View>
       ) : (
         <View style={styles.boxNotLog}>
-          <Text style={styles.textNotLog}>You are not signed in</Text>
+          <Image style={styles.cat} source={require("../assets/pngwing.com (1).png")} />
+          <Text style={styles.textNotLog}>You are not signed in...</Text>
         </View>
       )}
     </ScrollView>
@@ -46,6 +46,7 @@ export default function Library({ navigation }) {
 const styles = StyleSheet.create({
   box: {
     marginTop: 50,
+    
   },
   container: {
     marginHorizontal: 30,
@@ -65,16 +66,19 @@ const styles = StyleSheet.create({
     fontFamily: 'ari-bold',
     color: 'white',
   },
+  cat: {
+    width: 150,
+    height: 100
+  },
   textNotLog: {
-    fontSize: 20,
+    fontSize: 25,
     fontFamily: 'ari-bold',
     color: 'white',
     justifyContent: 'center',
   },
   boxNotLog: {
     alignItems: 'center',
-    margin: 50,
-    backgroundColor: '#3d3c3c',
+    marginTop: 220,
   },
   author: {
     color: 'gray',

@@ -18,7 +18,7 @@ export default function LogIn({ navigation }) {
       password: userPassword,
     };
 
-    axios.post("http://192.168.1.3:5001/LogIn", data)
+    axios.post("http://192.168.1.4:5001/LogIn", data)
       .then(res => {
         if (res.data) {
           setUser(res.data);  // Сохранение данных пользователя в контексте

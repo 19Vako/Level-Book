@@ -54,6 +54,7 @@ export default function Navigate() {
               headerStyle: {
                 backgroundColor: '#1d1e1f',
               },
+              headerBackTitle: 'Back',
             }}
           />
           <Stack.Screen 
@@ -65,6 +66,7 @@ export default function Navigate() {
               headerStyle: {
                 backgroundColor: '#1d1e1f',
               },
+              headerBackTitle: 'Back',
             }}
           />
           <Stack.Screen 
@@ -76,6 +78,7 @@ export default function Navigate() {
               headerStyle: {
                 backgroundColor: '#1d1e1f',
               },
+              headerBackTitle: 'Back',
             }}
           />
           <Stack.Screen
@@ -93,7 +96,8 @@ export default function Navigate() {
                   style={{ flexDirection: 'row', alignItems: 'center' }}
                 >
                   <FontAwesome5 name="chevron-left" size={27} color="white" style={{ marginLeft: 5 }} />
-                  <Text style={{ color: 'white', marginLeft: 5, fontSize: 18 }}>Home</Text>
+                  <Text style={{ color: 'white', marginLeft: 5, fontSize: 18 }}>Back</Text>
+                 
                 </TouchableOpacity>
               ),
             })}
@@ -109,6 +113,7 @@ export default function Navigate() {
                 headerStyle: {
                   backgroundColor: '#1d1e1f',
                 },
+                headerBackTitle: 'Back',
               };
             }}
           />
@@ -123,6 +128,7 @@ export default function Navigate() {
                 headerStyle: {
                   backgroundColor: '#1d1e1f',
                 },
+                headerBackTitle: 'Back',
               };
             }}
           />
@@ -137,6 +143,7 @@ export default function Navigate() {
                 headerStyle: {
                   backgroundColor: '#1d1e1f',
                 },
+                headerBackTitle: 'Back',
               };
             }}
           />

@@ -11,18 +11,21 @@ export default function Book({ route, navigation }) {
   const  { book } = route.params;
   const  { user, setUser } = useContext(UserContext);
   
-  
   function AddToLibrary() {
-    axios.post("http://192.168.1.3:5001/LibraryAdd", {userId: user._id, book: book} )
-    .then(res => {
-      const updatedUser = { ...user, library: [...user.library, book] };
-      setUser(updatedUser);
-      console.log(res.data)
-    })
-    .catch(err => {
-      console.error(err)
-    });
+    
+    if(user){
+      axios.post("http://192.168.1.4:5001/LibraryAdd", {userId: user._id, book: book} )
+      .then(res => {
+        const updatedUser = { ...user, library: [...user.library, book] };
+        setUser(updatedUser);
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.error(err)
+      });
+    }
   }
+
   
 
   return (
@@ -105,6 +108,7 @@ const styles = StyleSheet.create({
   justifyContent: 'center',
   alignItems: 'center',
   borderWidth: 1,
+
   borderColor: 'silver',
   borderRadius: 20,
   padding: 10,
