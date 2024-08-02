@@ -23,6 +23,8 @@ import UserAcount from './stack/UserAcount';
 import Book from './stack/Book';
 import ReadBook from './stack/ReadBook';
 import TopForBeginers from './stack/TopForBeginers';
+import UserBooks from './stack/UserBooks';
+import UserFavorite from './stack/UserFavorite';
 
 // Icons
 import { Entypo } from '@expo/vector-icons';
@@ -102,6 +104,39 @@ export default function Navigate() {
               ),
             })}
           />
+
+
+
+
+          <Stack.Screen
+            name='UserBooks'
+            component={UserBooks}
+            options={{
+              title: 'Books',
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#1d1e1f',
+              },
+              headerBackTitle: 'Back',
+            }}
+          />
+
+          <Stack.Screen
+            name='UserFavorite'
+            component={UserFavorite}
+            options={{
+              title: 'Favorite',
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#1d1e1f',
+              },
+              headerBackTitle: 'Back',
+            }}
+          />
+ 
+
+
+
           <Stack.Screen
             name="Book"
             component={Book}
@@ -169,33 +204,62 @@ function BottomTabs() {
           }
         },
         tabBarStyle: {
-          height: 90,
+          height: 86,
           paddingTop: 20,
           backgroundColor: '#1d1e1f',
+          borderBlockColor: '#1d1e1f'
         }, 
+       
+
         tabBarActiveTintColor: 'white', // Active tab color
         tabBarInactiveTintColor: 'gray', // Inactive tab color
+        ...gStyle.tabContainer,
       })}
+      
     >
       <Tab.Screen 
         name="Main" 
         component={Main} 
-        options={gStyle.tabContainer}
+        options={{
+          headerStyle: {
+            backgroundColor: '#1d1e1f',
+            borderBottomColor: '#1d1e1f', // задайте нужный цвет
+            borderBottomWidth: 1, // задайте ширину границы
+          },
+        }}
       />
       <Tab.Screen 
         name="Reading now"
         component={ReadingNow}
-        options={gStyle.tabContainer}
+        options={{
+          headerStyle: {
+            backgroundColor: '#1d1e1f',
+            borderBottomColor: '#1d1e1f', // задайте нужный цвет
+            borderBottomWidth: 1, // задайте ширину границы
+          },
+        }}
       />
       <Tab.Screen 
         name="Library" 
         component={Library} 
-        options={gStyle.tabContainer}
+        options={{
+          headerStyle: {
+            backgroundColor: '#1d1e1f',
+            borderBottomColor: '#1d1e1f', // задайте нужный цвет
+            borderBottomWidth: 1, // задайте ширину границы
+          },
+        }}
       />
       <Tab.Screen
         name='Search'
         component={Search}
-        options={gStyle.tabContainer}
+        options={{
+          headerStyle: {
+            backgroundColor: '#1d1e1f',
+            borderBottomColor: '#1d1e1f', // задайте нужный цвет
+            borderBottomWidth: 1, // задайте ширину границы
+          },
+        }}
       />
     </Tab.Navigator>
   );

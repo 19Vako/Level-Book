@@ -37,10 +37,9 @@ export default function UserAcount({ navigation }) {
     }
     if(UserName && UserPassword){
       loadScene()
-    axios.post("http://192.168.1.3:5001/register", Data)
+    axios.post("http://192.168.1.2:5001/SignUp", Data)
     .then(res => {
       console.log(res.data)
-      
     })
     .catch(err => console.log(err))
   }

@@ -11,21 +11,20 @@ export default function LogIn({ navigation }) {
   const [userPassword, setUserPassword] = useState('');
 
   const handleLogIn = () => {
+    if (userName && userPassword) {
+      const data = {
+        name: userName,
+        password: userPassword,
+      };
 
-    if(userName && userPassword) {
-    const data = {
-      name: userName,
-      password: userPassword,
-    };
-
-    axios.post("http://192.168.1.4:5001/LogIn", data)
-      .then(res => {
-        if (res.data) {
-          setUser(res.data);  // Сохранение данных пользователя в контексте
-          navigation.navigate('UserAcount');
-        }
-      })
-      .catch(err => console.log(err));
+      axios.post("http://192.168.1.2:5001/LogIn", data)
+        .then(res => {
+          if (res.data) {
+            setUser(res.data);  // Сохранение данных пользователя в контексте
+            navigation.navigate('UserAcount');  // Переход на страницу UserAcount
+          }
+        })
+        .catch(err => console.log(err));
     }
   };
 
@@ -37,18 +36,18 @@ export default function LogIn({ navigation }) {
 
       <View style={styles.inputBox}>
         <View style={styles.inputContainer}>
-          <TextInput 
-            style={styles.input} 
-            placeholder='Name' 
+          <TextInput
+            style={styles.input}
+            placeholder='Name'
             placeholderTextColor={'silver'}
             onChangeText={setUserName}
           />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput 
-            secureTextEntry={true}  
-            style={styles.input}  
-            placeholder='Password' 
+          <TextInput
+            secureTextEntry={true}
+            style={styles.input}
+            placeholder='Password'
             placeholderTextColor={'silver'}
             onChangeText={setUserPassword}
           />

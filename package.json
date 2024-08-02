@@ -18,7 +18,7 @@
     "debug": "^4.3.5",
     "expo": "~51.0.11",
     "expo-app-loading": "^2.1.1",
-    "expo-image-picker": "~15.0.5",
+    "expo-image-picker": "~15.0.7",
     "expo-linear-gradient": "~13.0.2",
     "expo-splash-screen": "^0.27.5",
     "expo-status-bar": "~1.12.1",
@@ -32,11 +32,13 @@
     "react-native-image-crop-picker": "^0.41.1",
     "react-native-image-picker": "^7.1.2",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-modal": "^13.0.1",
     "react-native-safe-area-context": "^4.10.4",
     "react-native-screens": "^3.31.1",
     "react-native-svg": "^15.3.0",
     "react-navigation-stack": "^2.10.4",
-    "save-dev": "^0.0.1-security"
+    "save-dev": "^0.0.1-security",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

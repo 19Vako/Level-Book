@@ -5,29 +5,126 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
 import UserContext from '../UserContext/Context';
+import { useEffect, useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 
 
 export default function Book({ route, navigation }) {
-  const  { book } = route.params;
-  const  { user, setUser } = useContext(UserContext);
-  
-  function AddToLibrary() {
+  const { book } = route.params;
+  const { user, setUser, favorite, setFavorite } = useContext(UserContext);
+  const [ libraryBook, setLibraryBook ] = useState(false);
+
+
+  useEffect(() => {
     
-    if(user){
-      axios.post("http://192.168.1.4:5001/LibraryAdd", {userId: user._id, book: book} )
+    // Загрузите список избранных книг при монтировании компонента
+    if (user) {
+      axios.post("http://192.168.1.2:5001/GetFavoriteBooks", { userId: user._id })
+        .then(res => {
+          const favoriteBooks = res.data.favoriteBooks;
+          const favoriteMap = {};
+          favoriteBooks.forEach(book => {
+            favoriteMap[book.namebook] = true;
+          });
+          setFavorite(favoriteMap);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
+
+      axios.post("http://192.168.1.2:5001/FindBookFromLibrary", { userId: user._id, book: book }) 
       .then(res => {
-        const updatedUser = { ...user, library: [...user.library, book] };
-        setUser(updatedUser);
-        console.log(res.data)
+       setLibraryBook(true)
       })
-      .catch(err => {
-        console.error(err)
-      });
     }
-  }
+    
 
+
+  }, [user]);
   
-
+  
+  
+  const AddToLibrary = () => {
+  
+    if(!libraryBook){
+      if(user){
+        axios.post("http://192.168.1.2:5001/LibraryAdd", {userId: user._id, book: book} )
+        .then(res => {
+          const updateLibrary = { ...user, library: [...user.library, book] };
+          setUser(updateLibrary);
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.error(err)
+        });
+      }
+    }
+  };
+  const CheckLibrary = () => {
+    if(libraryBook){
+      return (
+        <>
+          <AntDesign name="checkcircle" size={24} color="white" />
+          <Text style={styles.addLibrary}>ADDED TO LIBRARY</Text>
+        </>
+      )
+    }
+    else {
+      return (
+        <>
+          <Ionicons name="add-circle" size={24} color="white" />
+          <Text style={styles.addLibrary}>ADD TO LIBRARY </Text>
+        </>
+      )
+    }
+  };
+  const addToFavorite = async () => {
+    try {
+      const response = await axios.post("http://192.168.1.2:5001/FindInFavorite", { userId: user._id, book });
+      const existBook = response.data.exists;
+  
+      if (existBook) {
+        await axios.post("http://192.168.1.2:5001/RemoveFromFavorite", { userId: user._id, book });
+      } else {
+        await axios.post("http://192.168.1.2:5001/AddToFavorite", { userId: user._id, book })
+        .then(res => {
+          const updateFavorite = { ...user, favorite: [...user.favorite, book] };
+          setUser(updateFavorite)
+        })
+      }
+  
+      setFavorite((prevFavorite) => ({
+        ...prevFavorite,
+        [book.namebook]: !existBook,  // Обновляем состояние для текущей книги
+      }));
+    } catch (error) {
+      console.error(error);
+      setFavorite((prevFavorite) => ({
+        ...prevFavorite,
+        [book.namebook]: prevFavorite[book.namebook],
+      }));
+    }
+  };
+  const getFavoriteIcon = (bookName) => {
+    return favorite[bookName] ? 'heart' : 'hearto';
+  }
+  const addToReadingList = () => {
+    if (user) {
+      axios.post("http://192.168.1.2:5001/AddToReading", { userId: user._id, book })
+        .then(res => {
+          const updatedReadingNow = [book, ...user.readingNow.filter(b => b.namebook !== book.namebook)];
+          setUser({ ...user, readingNow: updatedReadingNow });
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+    navigation.navigate('ReadBook', { book });
+  };
+  
+  
+  
   return (
     <ScrollView style={gStyle.container}>
       <View style={styles.imgContainer}>
@@ -37,14 +134,21 @@ export default function Book({ route, navigation }) {
       </View>
 
       <View style={styles.elContainer}>
-          <TouchableOpacity style={styles.readNow} onPress={() => navigation.navigate('ReadBook', {book})}>
+
+          <TouchableOpacity style={styles.addToFavorite} onPress={() => addToFavorite()}>
+            <AntDesign name={getFavoriteIcon(book.namebook)} size={30} color="white" />
+          </TouchableOpacity>
+
+
+          <TouchableOpacity style={styles.readNow} onPress={addToReadingList}>
             <Text style={styles.readNowTitle}>READ NOW</Text>
           </TouchableOpacity>
-          
+
+
           <TouchableOpacity style={styles.addContainer} onPress={AddToLibrary}>
-            <Ionicons name="add-circle" size={24} color="white" />
-            <Text style={styles.addLibrary}>ADD TO LIBRARY</Text>
-          </TouchableOpacity> 
+            <CheckLibrary/>
+          </TouchableOpacity>
+
       </View> 
       
       <View style={styles.Description}>
@@ -108,16 +212,26 @@ const styles = StyleSheet.create({
   justifyContent: 'center',
   alignItems: 'center',
   borderWidth: 1,
-
   borderColor: 'silver',
   borderRadius: 20,
   padding: 10,
   marginVertical: 5
  },
+
+
+ addToFavorite: {
+   marginLeft: 290,
+   marginBottom: 10
+ },
+
+
  addLibrary:{
   color: 'white',
   fontFamily: 'ari-bold',
+  marginLeft: 5
  },
+
+
  audioContainer: {
   flexDirection: 'row',
   justifyContent: 'center',

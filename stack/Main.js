@@ -22,7 +22,6 @@ export default function Main({ navigation }) {
   return (
     <ScrollView style={gStyle.container}>
       <Header navigation={navigation}/>
-     
       <A1List navigation={navigation}/>
       <A2List navigation={navigation}/>
       <TouchableOpacity onPress={loadScene}>

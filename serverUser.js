@@ -1,20 +1,33 @@
-const { MongoOIDCError } = require("mongodb");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+
 
 const UserSchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
+    },
+    userPhoto: {
+      type: String,
+      default: '',
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     library: {
-        type: Array,
-        default: [],
+      type: Array,
+      default: [],
+    },
+    readingNow: {
+      type: Array,
+      default: [],
+    },
+    favorite: {
+      type: Array,
+      default: []
     }
-});
+  });
+
 const BookSchema = new mongoose.Schema({
     namebook: {
         type: String,

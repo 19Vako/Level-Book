@@ -14,7 +14,7 @@ export default function Search({ navigation }) {
     setInput(text);
 
     if(text){
-      axios.get("http://192.168.1.4:5001/Search", {
+      axios.get("http://192.168.1.2:5001/Search", {
         params: { book: text }
       })
       .then(res => {
