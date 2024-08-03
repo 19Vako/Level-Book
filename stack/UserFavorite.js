@@ -19,7 +19,7 @@ export default function UserFavorite({navigation}) {
 
   const addToReadingList = (book) => {
     if (user) {
-      axios.post("http://192.168.1.2:5001/AddToReading", { userId: user._id, book })
+      axios.post("http://192.168.1.4:5001/AddToReading", { userId: user._id, book })
         .then(res => {
           const updatedReadingNow = [book, ...user.readingNow.filter(b => b.namebook !== book.namebook)];
           setUser({ ...user, readingNow: updatedReadingNow });

@@ -19,7 +19,7 @@ export default function Book({ route, navigation }) {
     
     // Загрузите список избранных книг при монтировании компонента
     if (user) {
-      axios.post("http://192.168.1.2:5001/GetFavoriteBooks", { userId: user._id })
+      axios.post("http://192.168.1.4:5001/GetFavoriteBooks", { userId: user._id })
         .then(res => {
           const favoriteBooks = res.data.favoriteBooks;
           const favoriteMap = {};
@@ -33,7 +33,7 @@ export default function Book({ route, navigation }) {
         });
 
 
-      axios.post("http://192.168.1.2:5001/FindBookFromLibrary", { userId: user._id, book: book }) 
+      axios.post("http://192.168.1.4:5001/FindBookFromLibrary", { userId: user._id, book: book }) 
       .then(res => {
        setLibraryBook(true)
       })
@@ -49,7 +49,7 @@ export default function Book({ route, navigation }) {
   
     if(!libraryBook){
       if(user){
-        axios.post("http://192.168.1.2:5001/LibraryAdd", {userId: user._id, book: book} )
+        axios.post("http://192.168.1.4:5001/LibraryAdd", {userId: user._id, book: book} )
         .then(res => {
           const updateLibrary = { ...user, library: [...user.library, book] };
           setUser(updateLibrary);
@@ -81,13 +81,13 @@ export default function Book({ route, navigation }) {
   };
   const addToFavorite = async () => {
     try {
-      const response = await axios.post("http://192.168.1.2:5001/FindInFavorite", { userId: user._id, book });
+      const response = await axios.post("http://192.168.1.4:5001/FindInFavorite", { userId: user._id, book });
       const existBook = response.data.exists;
   
       if (existBook) {
-        await axios.post("http://192.168.1.2:5001/RemoveFromFavorite", { userId: user._id, book });
+        await axios.post("http://192.168.1.4:5001/RemoveFromFavorite", { userId: user._id, book });
       } else {
-        await axios.post("http://192.168.1.2:5001/AddToFavorite", { userId: user._id, book })
+        await axios.post("http://192.168.1.4:5001/AddToFavorite", { userId: user._id, book })
         .then(res => {
           const updateFavorite = { ...user, favorite: [...user.favorite, book] };
           setUser(updateFavorite)
@@ -111,7 +111,7 @@ export default function Book({ route, navigation }) {
   }
   const addToReadingList = () => {
     if (user) {
-      axios.post("http://192.168.1.2:5001/AddToReading", { userId: user._id, book })
+      axios.post("http://192.168.1.4:5001/AddToReading", { userId: user._id, book })
         .then(res => {
           const updatedReadingNow = [book, ...user.readingNow.filter(b => b.namebook !== book.namebook)];
           setUser({ ...user, readingNow: updatedReadingNow });

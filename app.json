@@ -4,19 +4,19 @@
     "slug": "Level-Book",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/longLogo.png",  
+      "resizeMode": "contain",  
+      "backgroundColor": "#1d1e1f"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/longLogo.png",
         "backgroundColor": "#ffffff"
       }
     },

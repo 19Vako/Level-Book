@@ -11,7 +11,7 @@ export default function TopForBeginers({navigation}) {
 
     useEffect(() => {
       const getBooks = () => {
-        axios.get("http://192.168.1.2:5001/GetA1")
+        axios.get("http://192.168.1.4:5001/GetA1")
           .then(res => {
             const booksData = res.data.slice(0, 5).map((book, index) => {
               let text = book.text;

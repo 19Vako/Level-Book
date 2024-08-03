@@ -7,23 +7,22 @@ import UserContext from '../UserContext/Context';
 import { gStyle } from '../styles/styles';
 
 export default function UserAccount({ navigation }) {
-  const { user, setUser, favorite, setFavorite} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [userImage, setUserImage] = useState(null);
+  const numberOfBooks = user?.library?.length || 0;
+  const numberOfFavorites = user?.favorite?.length || 0;
+
 
   useEffect(() => {
-
-   
     const fetchUserData = async () => {
       if (user && user._id) {
         try {
-          const response = await axios.get(`http://192.168.1.2:5001/getUser/${user._id}`);
+          const response = await axios.get(`http://192.168.1.4:5001/getUser/${user._id}`);
           if (response.data.success) {
             const fetchedUser = response.data.user;
             if (fetchedUser.userPhoto) {
-              console.log("Fetched user photo URL:", fetchedUser.userPhoto);
               setUserImage(`data:image/jpeg;base64,${fetchedUser.userPhoto}`);
             } else {
-              console.log("No image found for user.");
               setUserImage(null);
             }
           } else {
@@ -37,11 +36,6 @@ export default function UserAccount({ navigation }) {
   
     fetchUserData();
   }, [user]);
-
-  const numberOfBooks = user?.library?.length || 0;
-  const numberOfFavorites = user?.favorite?.length || 0;
-
-  
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -71,14 +65,25 @@ export default function UserAccount({ navigation }) {
             console.error("Error uploading photo:", error);
         }
     }
-};
+  };
+
+
+  const exitAccount = () => {
+    navigation.navigate('LogIn')
+    setUser(null)
+  }
 
 
   
 
   return (
     <ScrollView style={gStyle.container}>
+
+
+    {user ? (
       <View style={styles.userBox}>
+
+
         <TouchableOpacity onPress={pickImage}>
           {userImage ? (
             <Image source={{ uri: userImage }} style={styles.image} />
@@ -88,6 +93,8 @@ export default function UserAccount({ navigation }) {
         </TouchableOpacity>
         <Text style={styles.title}>{user.name}</Text>
         <View style={styles.box}>
+
+
           <TouchableOpacity style={styles.list} onPress={() => navigation.navigate('UserFavorite')}>
             <AntDesign name="heart" size={24} color="white" />
             <View style={styles.icons}>
@@ -105,19 +112,26 @@ export default function UserAccount({ navigation }) {
               <AntDesign name="right" size={24} color="white" />
             </View>
           </TouchableOpacity>
+
+
         </View>
-        <TouchableOpacity style={styles.out}>
+
+        <TouchableOpacity style={styles.out} onPress={exitAccount}>
           <Text style={styles.titleOut}>Exit</Text>
         </TouchableOpacity>
+        
       </View>
+    ): null}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+
   userBox: {
     alignItems: 'center',
-    padding: 30,
+    paddingTop: 30,
+    paddingHorizontal: 30,
   },
   box: {
     marginTop: 40,
@@ -131,6 +145,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+
+
   title: {
     color: 'white',
     fontFamily: 'ari-med',
@@ -147,6 +163,8 @@ const styles = StyleSheet.create({
     fontFamily: 'ari-bold',
     marginLeft: 160,
   },
+
+
   icons: {
     width: '100%',
     paddingRight: 20,
@@ -163,16 +181,18 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
+
+
   out: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '100%',
-    marginBottom: 10,
+    width: '100%',
+    marginTop: '110%'
   },
   titleOut: {
     color: 'red',
     fontFamily: 'ari-med',
     fontSize: 20,
-    marginHorizontal: 15,
   },
+
 });

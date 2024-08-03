@@ -33,7 +33,7 @@ export default function Library({ navigation }) {
   
   const addToReadingList = (book) => {
     if (user) {
-      axios.post("http://192.168.1.2:5001/AddToReading", { userId: user._id, book })
+      axios.post("http://192.168.1.4:5001/AddToReading", { userId: user._id, book })
         .then(res => {
           const updatedReadingNow = [book, ...user.readingNow.filter(b => b.namebook !== book.namebook)];
           setUser({ ...user, readingNow: updatedReadingNow });
@@ -55,7 +55,7 @@ export default function Library({ navigation }) {
 
   const addToFavorite = async (book) => {
     try {
-      await axios.post("http://192.168.1.2:5001/AddToFavorite", { userId: user._id, book });
+      await axios.post("http://192.168.1.4:5001/AddToFavorite", { userId: user._id, book });
       setFavorite(prev => ({
         ...prev,
         [book.namebook]: true
@@ -90,7 +90,7 @@ export default function Library({ navigation }) {
   };
 
   const DeleteBook = (book) => {
-    axios.post("http://192.168.1.2:5001/DeleteFromLibrary", {userId: user._id, book: book})
+    axios.post("http://192.168.1.4:5001/DeleteFromLibrary", {userId: user._id, book: book})
     .then(res => {
       const updatedlibrary = [...user.library.filter(b => b.namebook !== book.namebook)];
       setUser({ ...user, library: updatedlibrary });

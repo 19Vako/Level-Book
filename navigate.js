@@ -104,10 +104,6 @@ export default function Navigate() {
               ),
             })}
           />
-
-
-
-
           <Stack.Screen
             name='UserBooks'
             component={UserBooks}
@@ -120,7 +116,6 @@ export default function Navigate() {
               headerBackTitle: 'Back',
             }}
           />
-
           <Stack.Screen
             name='UserFavorite'
             component={UserFavorite}
@@ -133,10 +128,6 @@ export default function Navigate() {
               headerBackTitle: 'Back',
             }}
           />
- 
-
-
-
           <Stack.Screen
             name="Book"
             component={Book}
