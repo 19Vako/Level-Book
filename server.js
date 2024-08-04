@@ -48,14 +48,15 @@ app.post("/SignUp", async (req, res) =>{
     catch(err){res.send({status:"err", data: err})
     }
 });
+
+
 app.post("/LogIn", async (req, res) =>{
-    const {name} = req.body;
-
+    const {name, password} = req.body;
     try{
-        const user = await User.findOne({name: name});
-
+        const user = await User.findOne({name: name, password: password });
+        
         if(!user){
-            return res.send({ status: "error", data: "User not found"});
+            return res.send(null);
         }
 
         res.json(user)
