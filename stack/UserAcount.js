@@ -36,7 +36,6 @@ export default function UserAccount({ navigation }) {
   
     fetchUserData();
   }, [user]);
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -66,23 +65,17 @@ export default function UserAccount({ navigation }) {
         }
     }
   };
-
-
   const exitAccount = () => {
     navigation.navigate('LogIn')
     setUser(null)
   }
 
 
-  
 
   return (
     <ScrollView style={gStyle.container}>
-
-
     {user ? (
       <View style={styles.userBox}>
-
 
         <TouchableOpacity onPress={pickImage}>
           {userImage ? (

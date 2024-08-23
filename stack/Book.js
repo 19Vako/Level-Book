@@ -1,25 +1,25 @@
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, Dimensions } from 'react-native'
 import React, { useContext } from 'react'
 import { gStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import axios from 'axios';
-import UserContext from '../UserContext/Context';
 import { useEffect, useState } from 'react';
-import { AntDesign } from '@expo/vector-icons';
+import axios from 'axios';
 
+
+import UserContext from '../UserContext/Context';
+import { AntDesign } from '@expo/vector-icons';
+const { width, height } = Dimensions.get('window')
 
 export default function Book({ route, navigation }) {
   const { book } = route.params;
   const { user, setUser, favorite, setFavorite } = useContext(UserContext);
   const [ libraryBook, setLibraryBook ] = useState(false);
-
+ 
 
   useEffect(() => {
-    
-    // Загрузите список избранных книг при монтировании компонента
     if (user) {
-      axios.post("http://192.168.1.4:5001/GetFavoriteBooks", { userId: user._id })
+      axios.post("http://192.168.1.3:5001/GetFavoriteBooks", { userId: user._id })
         .then(res => {
           const favoriteBooks = res.data.favoriteBooks;
           const favoriteMap = {};
@@ -33,7 +33,7 @@ export default function Book({ route, navigation }) {
         });
 
 
-      axios.post("http://192.168.1.4:5001/FindBookFromLibrary", { userId: user._id, book: book }) 
+      axios.post("http://192.168.1.3:5001/FindBookFromLibrary", { userId: user._id, book: book }) 
       .then(res => {
        setLibraryBook(true)
       })
@@ -49,7 +49,7 @@ export default function Book({ route, navigation }) {
   
     if(!libraryBook){
       if(user){
-        axios.post("http://192.168.1.4:5001/LibraryAdd", {userId: user._id, book: book} )
+        axios.post("http://192.168.1.3:5001/LibraryAdd", {userId: user._id, book: book} )
         .then(res => {
           const updateLibrary = { ...user, library: [...user.library, book] };
           setUser(updateLibrary);
@@ -81,13 +81,13 @@ export default function Book({ route, navigation }) {
   };
   const addToFavorite = async () => {
     try {
-      const response = await axios.post("http://192.168.1.4:5001/FindInFavorite", { userId: user._id, book });
+      const response = await axios.post("http://192.168.1.3:5001/FindInFavorite", { userId: user._id, book });
       const existBook = response.data.exists;
   
       if (existBook) {
-        await axios.post("http://192.168.1.4:5001/RemoveFromFavorite", { userId: user._id, book });
+        await axios.post("http://192.168.1.3:5001/RemoveFromFavorite", { userId: user._id, book });
       } else {
-        await axios.post("http://192.168.1.4:5001/AddToFavorite", { userId: user._id, book })
+        await axios.post("http://192.168.1.3:5001/AddToFavorite", { userId: user._id, book })
         .then(res => {
           const updateFavorite = { ...user, favorite: [...user.favorite, book] };
           setUser(updateFavorite)
@@ -111,7 +111,7 @@ export default function Book({ route, navigation }) {
   }
   const addToReadingList = () => {
     if (user) {
-      axios.post("http://192.168.1.4:5001/AddToReading", { userId: user._id, book })
+      axios.post("http://192.168.1.3:5001/AddToReading", { userId: user._id, book })
         .then(res => {
           const updatedReadingNow = [book, ...user.readingNow.filter(b => b.namebook !== book.namebook)];
           setUser({ ...user, readingNow: updatedReadingNow });
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
   alignItems: 'center'
  },
  img: {
-  height: 450,
-  width: 300
+  height: height * 0.6,
+  width: width * 0.85
  },
  author: {
   color: 'white',
@@ -184,15 +184,15 @@ const styles = StyleSheet.create({
   marginVertical: 15
  },
  elContainer:{
-  marginHorizontal: 30,
+  marginHorizontal: width * 0.07 ,
   borderBottomWidth: 1,
   borderColor: 'gray',
-  paddingBottom: 25
+  paddingBottom: width * 0.05
  },
  readNow:{
    borderWidth: 1,
-   borderRadius: 20,
-   padding: 14,
+   borderRadius: width * 2,
+   padding: width * 0.04,
    alignItems: 'center',
    justifyContent: 'center',
    backgroundColor: '#3d3c3c',
@@ -202,51 +202,30 @@ const styles = StyleSheet.create({
    color: 'white',
    fontFamily: 'ari-bold',
  },
- box: {
-  marginVertical: 15,
-  flexDirection: 'row',
-  justifyContent: 'space-between'
- },
+ 
  addContainer: {
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   borderWidth: 1,
   borderColor: 'silver',
-  borderRadius: 20,
-  padding: 10,
+  borderRadius: width * 2,
+  padding: width * 0.025,
   marginVertical: 5
  },
-
-
  addToFavorite: {
-   marginLeft: 290,
-   marginBottom: 10
+   marginLeft: width * 0.75,
+   marginBottom: height * 0.01
  },
-
-
  addLibrary:{
   color: 'white',
   fontFamily: 'ari-bold',
   marginLeft: 5
  },
-
-
- audioContainer: {
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderWidth: 1,
-  borderRadius: 20,
-  padding: 14,
-  backgroundColor: '#3d3c3c',
-  marginTop: 5,
-  marginBottom: 20
- },
  Description: {
   marginTop: 30,
   marginBottom: 50,
-  marginHorizontal: 30,
+  marginHorizontal: width * 0.07 ,
   borderBottomWidth: 1,
   borderColor: 'gray',
   paddingBottom: 25
@@ -255,12 +234,11 @@ const styles = StyleSheet.create({
  DescriptionTitle: {
   color: "white",
   fontFamily: 'ari-bold',
-  fontSize: 20,
-  marginBottom: 10
+  fontSize: width * 0.05,
+  marginBottom: height * 0.02
  },
  DescriptionText: {
   color: 'white',
   fontFamily: 'ari-med'
  }
-
 })

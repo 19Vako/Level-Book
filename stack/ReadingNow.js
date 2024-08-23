@@ -27,7 +27,7 @@ export default function ReadingNow({ navigation }) {
     }
     // Загрузите список избранных книг при монтировании компонента
     if (user) {
-      axios.post("http://192.168.1.4:5001/GetFavoriteBooks", { userId: user._id })
+      axios.post("http://192.168.1.3:5001/GetFavoriteBooks", { userId: user._id })
         .then(res => {
           const favoriteBooks = res.data.favoriteBooks;
           const favoriteMap = {};
@@ -44,7 +44,7 @@ export default function ReadingNow({ navigation }) {
 
   const handleBookPress = (book) => {
     if (user) {
-      axios.post("http://192.168.1.4:5001/AddToReading", { userId: user._id, book })
+      axios.post("http://192.168.1.3:5001/AddToReading", { userId: user._id, book })
         .then(res => {
           const updatedReadingNow = [book, ...user.readingNow.filter(b => b.namebook !== book.namebook)];
           setUser({ ...user, readingNow: updatedReadingNow });
@@ -71,13 +71,13 @@ export default function ReadingNow({ navigation }) {
 
   const addToFavorite = async (book) => {
     try {
-      const response = await axios.post("http://192.168.1.4:5001/FindInFavorite", { userId: user._id, book });
+      const response = await axios.post("http://192.168.1.3:5001/FindInFavorite", { userId: user._id, book });
       const existBook = response.data.exists;
   
       if (existBook) {
-        await axios.post("http://192.168.1.4:5001/RemoveFromFavorite", { userId: user._id, book });
+        await axios.post("http://192.168.1.3:5001/RemoveFromFavorite", { userId: user._id, book });
       } else {
-        await axios.post("http://192.168.1.4:5001/AddToFavorite", { userId: user._id, book })
+        await axios.post("http://192.168.1.3:5001/AddToFavorite", { userId: user._id, book })
         .then(res => {
           const updateFavorite = { ...user, favorite: [...user.favorite, book] };
           setUser(updateFavorite)

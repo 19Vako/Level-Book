@@ -14,7 +14,7 @@ export default function A2List({navigation}) {
  const [books, setBooks] = useState([]);
   useEffect(() => {
     const getBooks = () => {
-      axios.get("http://192.168.1.4:5001/GetA2")
+      axios.get("http://192.168.1.3:5001/GetA2")
         .then(res => {
           const data = res.data.map((book, index) => ({
             id: index,

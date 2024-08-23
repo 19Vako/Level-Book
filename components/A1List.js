@@ -11,7 +11,7 @@ export default function A1List({ navigation }) {
   const nameLevel = 'A1 Level';
   useEffect(() => {
     const getBooks = () => {
-      axios.get("http://192.168.1.4:5001/GetA1")
+      axios.get("http://192.168.1.3:5001/GetA1")
         .then(res => {
           const data = res.data.map((book, index) => ({
             id: index,
